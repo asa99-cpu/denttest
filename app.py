@@ -21,6 +21,7 @@ def add_client_tab():
         new_entry = {"Name": name, "Age": age, "Contact": contact, "Medical History": medical_history}
         add_client(new_entry)  # Call the add_client function from utils
         st.success("Client Added Successfully!")
+        st.balloons()  # Celebrate with balloons!
 
 def client_overview_tab():
     st.subheader("Client Overview")
