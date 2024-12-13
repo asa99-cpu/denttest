@@ -2,9 +2,9 @@ import os
 import streamlit as st
 
 def display_contact_info():
-    # Set the page title
-    st.title("پەیوەندی کردن")
-
+    # Set the page title with right alignment using markdown
+    st.markdown('<h1 style="text-align: right;">پەیوەندی کردن</h1>', unsafe_allow_html=True)
+    
     # Define the correct relative path to the image
     image_path = os.path.join("content", "denta.JPG")
     
@@ -16,7 +16,7 @@ def display_contact_info():
 
     # Section introduction with a welcoming message
     st.markdown("## Welcome to our Dental Clinic!")
-    st.write("دودڵ مەبە لە پەیوەندیکردن بۆ تەندروستیەکی باشتری ددانەکانت.")
+    st.write("We are here to provide you with the best dental care. Feel free to reach out for any inquiries or appointments.")
 
     # Add contact details with icons for visual enhancement
     st.markdown("### Contact Details")
