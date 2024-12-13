@@ -1,6 +1,7 @@
 import streamlit as st
 from sidebar import add_sidebar
-from utils import add_client_tab, client_overview_tab, display_contact_info
+from utils import load_database, add_client_tab, client_overview_tab
+from contact_info import display_contact_info
 
 # Initialize session state for selected_section if it does not exist
 if "selected_section" not in st.session_state:
