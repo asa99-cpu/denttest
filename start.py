@@ -1,5 +1,4 @@
 import streamlit as st
-import time
 
 def display_welcome_animation():
     """Display animation or attractive page."""
@@ -56,20 +55,16 @@ def display_welcome_animation():
     <div class="dentist-emoji">🦷</div>
     """, unsafe_allow_html=True)
 
-    # Ensure the session state is initialized
+    # Initialize session state for navigation if not already initialized
     if "selected_section" not in st.session_state:
         st.session_state["selected_section"] = "Welcome"
 
     # Display "Enter Clinic" button
     if st.button("کرتە لێرە بکە", key="enter_button"):
-        st.session_state["selected_section"] = "Add Client"  # Transition to Add Client section
-        st.experimental_rerun()  # Re-run to reflect the change
+        st.session_state["selected_section"] = "Add Client"  # Set the section to Add Client directly
 
-    # Conditionally display sections based on session state
-    if st.session_state["selected_section"] == "Welcome":
-        # The welcome page will be displayed initially
-        display_welcome_animation()
-    elif st.session_state["selected_section"] == "Add Client":
+    # Conditionally render the Add Client section based on session state
+    if st.session_state["selected_section"] == "Add Client":
         # Add Client Section
         # You can move your "Add Client" logic here or import it from another script
         st.subheader("Add Client")
