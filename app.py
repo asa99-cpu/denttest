@@ -5,14 +5,17 @@ import start  # Import the start.py file
 
 def main():
     """Main function to run the app."""
-    # Display the welcome animation first
+    
+    # Check if user has visited before, else show the start page
     if "selected_section" not in st.session_state:
         st.session_state["selected_section"] = "Start Page"
 
     if st.session_state["selected_section"] == "Start Page":
+        # Show the welcome animation page
         start.display_welcome_animation()
     else:
-        add_sidebar()  # Sidebar navigation
+        # Show the sidebar and sections after the user clicks "Enter Clinic App"
+        add_sidebar()
         # Show the content based on selected section
         if st.session_state["selected_section"] == "Add Client":
             add_client_tab()
