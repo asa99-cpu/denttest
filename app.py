@@ -4,21 +4,25 @@ from utils import add_client, load_database
 from contact_info import display_contact_info  # Import the function for contact info
 
 def main():
+    # Set the page title
     st.title("کلینیکی ددانی شادیار")
 
     # Initialize session_state for 'selected_section' if not already set
     if "selected_section" not in st.session_state:
-        st.session_state["selected_section"] = "Add Client"  # Set a default section (e.g., "Add Client")
+        st.session_state["selected_section"] = "Add Client"  # Default to "Add Client"
 
     # Sidebar for navigation
     add_sidebar()  # This will call the function from sidebar.py
 
     # Display the corresponding content based on sidebar selection
-    if st.session_state["selected_section"] == "Add Client":
+    selected_section = st.session_state["selected_section"]
+    
+    # Check if the selected section exists and show the corresponding content
+    if selected_section == "Add Client":
         add_client_tab()
-    elif st.session_state["selected_section"] == "Client Overview":
+    elif selected_section == "Client Overview":
         client_overview_tab()
-    elif st.session_state["selected_section"] == "Contact Info":
+    elif selected_section == "Contact Info":
         display_contact_info()  # Show the contact info tab
 
 def add_client_tab():
