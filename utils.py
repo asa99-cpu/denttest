@@ -1,11 +1,17 @@
 # utils.py
 
-import pandas as pd
 import os
 import requests
-import streamlit as st
+import pandas as pd
 import base64
 import io
+import streamlit as st
+
+# Configuration Variables
+LOCAL_DATABASE_FILE = "Database.csv"
+GITHUB_REPO = "asa99-cpu/denttest"  # Replace with your actual GitHub repository name
+GITHUB_FILE_PATH = "Database.csv"   # The path to your database file in GitHub
+GITHUB_TOKEN = st.secrets["github"]["token"]  # Ensure that you have the GitHub token saved in Streamlit secrets
 
 def load_database():
     """Load the database from GitHub or fallback to local CSV."""
@@ -26,23 +32,3 @@ def load_database():
     except Exception as e:
         st.error(f"Error loading database: {e}")
         return pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
-
-def add_client_tab():
-    """Function for the 'Add Client' tab in the app"""
-    st.subheader("Add Client")
-    name = st.text_input("Client Name")
-    age = st.number_input("Age", min_value=0)
-    contact = st.text_input("Contact")
-    medical_history = st.text_area("Medical History")
-
-    if st.button("Add Client", key="add_client_button"):
-        new_entry = {"Name": name, "Age": age, "Contact": contact, "Medical History": medical_history}
-        add_client(new_entry)
-        st.success("Client Added Successfully!")
-        st.balloons()
-
-def client_overview_tab():
-    """Function for the 'Client Overview' tab in the app"""
-    st.subheader("Client Overview")
-    data = load_database()  # Load the database to show client data
-    st.write(data)
