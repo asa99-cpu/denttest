@@ -1,14 +1,20 @@
 import streamlit as st
 from utils import add_client, load_database
+from sidebar import render_sidebar  # Import the sidebar rendering function
 
 def main():
     st.title("Clinic App")
 
-    # Add Client Tab
-    add_client_tab()
+    # Add the sidebar
+    selected_option = render_sidebar()  # Get the selected option from the sidebar
 
-    # Client Overview Tab
-    client_overview_tab()
+    # Route to the corresponding tab based on selection
+    if selected_option == "Add Client":
+        add_client_tab()
+    elif selected_option == "Client Overview":
+        client_overview_tab()
+    else:
+        st.write("Welcome to the Clinic App!")
 
 def add_client_tab():
     st.subheader("Add Client")
