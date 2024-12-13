@@ -1,11 +1,59 @@
 import streamlit as st
 from sidebar import add_sidebar  # Correct import
-
 from utils import add_client, load_database
 from contact_info import display_contact_info  # Import the function for contact info
+import time
 
+# Create the landing page with animation and reklams
+def landing_page():
+    # Display a catchy title and background color
+    st.markdown("""
+    <div style="background-color:#FFDDC1; padding:20px;">
+        <h1 style="text-align:center; color:#FF6347;">Welcome to کلینیکی شادیار!</h1>
+        <p style="text-align:center; font-size:20px; color:#8B0000;">We are here to provide the best dental care for you!</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Adding a simple animation with CSS
+    st.markdown("""
+    <div style="text-align:center;">
+        <h2 style="color:#FF6347;">💥 Our Services Will Blow Your Mind! 💥</h2>
+        <p style="font-size:18px; color:#6A5ACD;">Stay tuned for the best dental care experience you will ever have.</p>
+        <div style="width:100%; height:5px; background-color:#FF6347; animation: slide 2s ease-out infinite;"></div>
+    </div>
+
+    <style>
+        @keyframes slide {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Display an image (optional, you can replace it with any image URL)
+    st.markdown("""
+    <div style="text-align:center; padding:20px;">
+        <img src="https://www.w3schools.com/html/img_girl.jpg" alt="Clinic Image" width="300"/>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Add a countdown or delay before moving to the main page
+    st.write("You will be redirected to our clinic information shortly...")
+    time.sleep(5)  # Delay for 5 seconds
+    
+    # Redirect to main content (display the main app after the delay)
+    st.experimental_rerun()
+
+# Main function to handle different pages
 def main():
-    st.title("Clinic App")
+    # Check if the "selected_section" is already in session state, if not, set it to a default value
+    if "selected_section" not in st.session_state:
+        st.session_state["selected_section"] = "Add Client"  # Default page after landing page
+
+    # Show the landing page first (only once when the app is first loaded)
+    if "visited_landing" not in st.session_state:
+        landing_page()  # Show the landing page first
+        st.session_state["visited_landing"] = True  # Mark as visited after showing the landing page
 
     # Sidebar for navigation
     add_sidebar()  # This will call the function from sidebar.py
