@@ -1,13 +1,18 @@
 import streamlit as st
+import os
 
 def display_contact_info():
-    st.subheader("Contact Information")
-
-    # Display the image in a small rectangle (adjust width and height)
-    image_path = "path_to_your_image.jpg"  # Replace with the correct path to your image
-    st.image(image_path, width=200)  # Adjust the width as needed
-
-    # Add other contact details below the image
-    st.markdown("For any inquiries, reach us at: [example@example.com](mailto:example@example.com)")
-    st.text("Or call us at: +1-234-567-8901")
-    st.text("Our address is: 123 Clinic Street, City, Country")
+    st.subheader("Contact Info")
+    
+    # Set the correct path to the image
+    image_path = os.path.join("denttest", "content", "denta.JPG")
+    
+    try:
+        st.image(image_path, width=200)  # Display the image with a width of 200
+    except Exception as e:
+        st.error(f"Error loading image: {str(e)}")
+        
+    # Add other contact information or details here
+    st.write("Clinic Address: Example address, City, Country")
+    st.write("Phone Number: +123456789")
+    st.write("Email: example@clinic.com")
