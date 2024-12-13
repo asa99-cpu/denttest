@@ -59,19 +59,26 @@ def display_welcome_animation():
     if "selected_section" not in st.session_state:
         st.session_state["selected_section"] = "Welcome"  # Start with the Welcome page
 
+    if "is_welcome_page" not in st.session_state:
+        st.session_state["is_welcome_page"] = True  # Start with the Welcome page visible
+
     # Display "Enter Clinic" button
     if st.button("کرتە لێرە بکە", key="enter_button"):
         st.session_state["selected_section"] = "MainApp"  # Set to main app after button click
+        st.session_state["is_welcome_page"] = False  # Hide the welcome page
 
-    # Conditionally render based on selected section
-    if st.session_state["selected_section"] == "MainApp":
+    # Conditionally render based on whether the welcome page is visible
+    if st.session_state["is_welcome_page"]:
+        # Show the welcome page if it's the first time
+        st.experimental_rerun()
+    else:
         show_main_app()
 
 def show_main_app():
     """Main app page containing all sections like Add Client, Client Overview, etc."""
     st.title("Dental Clinic - Main App")
 
-    # Add other sections (Add Client, Client Overview, etc.)
+    # Add sidebar with different sections (Add Client, Client Overview, etc.)
     menu = ["Add Client", "Client Overview", "Appointments", "Medical History"]
     choice = st.sidebar.selectbox("Select a Section", menu)
 
@@ -114,4 +121,3 @@ def medical_history_section():
     st.subheader("Medical History")
     # Logic for medical history goes here
     st.write("Displaying medical history...")
-
