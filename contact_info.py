@@ -1,6 +1,8 @@
 import os
 import streamlit as st
 
+def display_contact_info():
+    
         # Define the correct relative path to the image
     image_path = os.path.join("content", "denta.JPG")
     
