@@ -4,10 +4,10 @@ from add_client import add_client_tab
 from contact_info import display_contact_info
 
 def main():
-    # Set the initial state of the selected section
+    # Check if the "selected_section" exists in session_state, if not, initialize it
     if "selected_section" not in st.session_state:
-        st.session_state["selected_section"] = "Add Client"  # Default section
-
+        st.session_state["selected_section"] = "Add Client"  # Set default value to "Add Client"
+    
     # Add sidebar with navigation
     add_sidebar()
 
