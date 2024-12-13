@@ -13,6 +13,7 @@ def main():
     if "selected_section" not in st.session_state:
         st.session_state["selected_section"] = "Add Client"  # Default section
 
+    # Render the appropriate tab based on the selected section
     if st.session_state["selected_section"] == "Add Client":
         add_client_tab()
     elif st.session_state["selected_section"] == "Client Overview":
