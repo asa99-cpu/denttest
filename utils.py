@@ -7,21 +7,22 @@ DATABASE_FILE = "Database.csv"
 def load_database():
     """Load the database from the local CSV file."""
     if os.path.exists(DATABASE_FILE):
-        return pd.read_csv(DATABASE_FILE)
+        data = pd.read_csv(DATABASE_FILE)
     else:
-        # Return an empty DataFrame if the file doesn't exist
-        return pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
+        # Create an empty DataFrame with the proper columns if the file doesn't exist
+        data = pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
+    return data
 
 def add_client(new_entry):
     """Add a new client to the database."""
     data = load_database()  # Load existing data
 
-    # Ensure data is a DataFrame, in case it's None or something else
+    # Ensure data is a DataFrame
     if not isinstance(data, pd.DataFrame):
         data = pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
 
     # Append the new entry to the DataFrame
-    data = data.append(new_entry, ignore_index=True)  # Add the new entry
+    data = pd.concat([data, pd.DataFrame([new_entry])], ignore_index=True)
 
     # Save the updated DataFrame back to the CSV
     data.to_csv(DATABASE_FILE, index=False)
