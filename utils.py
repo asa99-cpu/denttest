@@ -1,4 +1,3 @@
-# utils.py
 import requests
 import pandas as pd
 import base64
