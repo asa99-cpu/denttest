@@ -41,24 +41,29 @@ def landing_page():
     st.write("You will be redirected to our clinic information shortly...")
     time.sleep(5)  # Delay for 5 seconds
     
-    # Redirect to main content (display the main app after the delay)
-    st.experimental_rerun()
+    # Set the flag in session state to hide the landing page and show the main content
+    st.session_state['show_landing'] = False
 
 # Main function to handle different pages
 def main():
-    # Show the landing page first
-    landing_page() 
+    # Initialize session state variable if not already set
+    if 'show_landing' not in st.session_state:
+        st.session_state['show_landing'] = True
 
-    # Sidebar for navigation
-    add_sidebar()  # This will call the function from sidebar.py
+    # Show the landing page first, and then show the sidebar and content
+    if st.session_state['show_landing']:
+        landing_page() 
+    else:
+        # Sidebar for navigation
+        add_sidebar()  # This will call the function from sidebar.py
 
-    # Display the corresponding content based on sidebar selection
-    if st.session_state["selected_section"] == "Add Client":
-        add_client_tab()
-    elif st.session_state["selected_section"] == "Client Overview":
-        client_overview_tab()
-    elif st.session_state["selected_section"] == "Contact Info":
-        display_contact_info()  # Show the contact info tab
+        # Display the corresponding content based on sidebar selection
+        if st.session_state["selected_section"] == "Add Client":
+            add_client_tab()
+        elif st.session_state["selected_section"] == "Client Overview":
+            client_overview_tab()
+        elif st.session_state["selected_section"] == "Contact Info":
+            display_contact_info()  # Show the contact info tab
 
 def add_client_tab():
     st.subheader("Add Client")
