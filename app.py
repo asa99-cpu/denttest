@@ -1,7 +1,7 @@
 import streamlit as st
 from sidebar import add_sidebar  # Correct import
-
 from utils import add_client, load_database
+from contact_info import display_contact_info  # Import the contact info function
 
 def main():
     st.title("Clinic App")
@@ -14,6 +14,8 @@ def main():
         add_client_tab()
     elif st.session_state["selected_section"] == "Client Overview":
         client_overview_tab()
+    elif st.session_state["selected_section"] == "Contact Info":
+        display_contact_info()  # Call the contact info function to display it
 
 def add_client_tab():
     st.subheader("Add Client")
