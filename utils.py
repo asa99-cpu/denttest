@@ -1,58 +1,19 @@
-import requests
 import pandas as pd
-import base64
 import os
 
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-REPO_OWNER = "your-username"  # Replace with your GitHub username
-REPO_NAME = "denttest"        # Replace with your repository name
-FILE_PATH = "Database.csv"
-BRANCH_NAME = "main"
+# Path to the local CSV file
+DATABASE_FILE = "Database.csv"
 
 def load_database():
-    """Fetch the file from GitHub and load it into a DataFrame."""
-    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{FILE_PATH}?ref={BRANCH_NAME}"
-    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
-    response = requests.get(url, headers=headers)
-
-    # Print out the response for debugging
-    print(f"GitHub Response: {response.status_code}")
-    print(f"Response Content: {response.text}")
-
-    if response.status_code == 200:
-        file_content = response.json()
-        file_data = base64.b64decode(file_content['content']).decode('utf-8')
-        return pd.read_csv(pd.compat.StringIO(file_data))
+    """Load the database from the local CSV file."""
+    if os.path.exists(DATABASE_FILE):
+        return pd.read_csv(DATABASE_FILE)
     else:
-        raise Exception(f"Failed to fetch file from GitHub. Status code: {response.status_code}. Response Content: {response.text}")
-
+        # Return an empty DataFrame if the file doesn't exist
+        return pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
 
 def add_client(new_entry):
-    """Add a new client entry to the database."""
-    data = load_database()
-    new_data = data.append(new_entry, ignore_index=True)
-    save_database(new_data)
-
-def save_database(data):
-    """Save the DataFrame to GitHub."""
-    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{FILE_PATH}"
-    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
-
-    # Convert DataFrame to CSV
-    csv_content = data.to_csv(index=False)
-
-    # Encode the content in base64
-    encoded_content = base64.b64encode(csv_content.encode('utf-8')).decode('utf-8')
-
-    payload = {
-        "message": "Update Database.csv",
-        "content": encoded_content,
-        "branch": BRANCH_NAME
-    }
-
-    response = requests.put(url, headers=headers, json=payload)
-
-    if response.status_code == 200:
-        print("Database updated successfully!")
-    else:
-        raise Exception(f"Failed to update database on GitHub. Status code: {response.status_code}")
+    """Add a new client to the database."""
+    data = load_database()  # Load existing data
+    data = data.append(new_entry, ignore_index=True)  # Add the new entry
+    data.to_csv(DATABASE_FILE, index=False)  # Save the updated data to the CSV
