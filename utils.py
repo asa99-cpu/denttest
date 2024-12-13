@@ -9,7 +9,7 @@ LOCAL_DATABASE_FILE = "Database.csv"
 
 # Load GitHub token from Streamlit secrets
 GITHUB_TOKEN = st.secrets["github"]["token"]
-GITHUB_REPO = "your-username/your-repository"  # Replace with your GitHub repo
+GITHUB_REPO = "asa99-cpu/denttest"  # Replace with your GitHub repo
 GITHUB_FILE_PATH = "Database.csv"  # Path to the file in the repository
 
 def load_database():
