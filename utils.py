@@ -15,5 +15,6 @@ def load_database():
 def add_client(new_entry):
     """Add a new client to the database."""
     data = load_database()  # Load existing data
+    data = pd.DataFrame(data)  # Ensure data is a DataFrame
     data = data.append(new_entry, ignore_index=True)  # Add the new entry
     data.to_csv(DATABASE_FILE, index=False)  # Save the updated data to the CSV
