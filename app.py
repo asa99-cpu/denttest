@@ -8,12 +8,12 @@ def main():
     # Add the sidebar
     selected_option = render_sidebar()  # Get the selected option from the sidebar
 
-    # Route to the corresponding tab based on selection
+    # Check for the selected option and route accordingly
     if selected_option == "Add Client":
         add_client_tab()
     elif selected_option == "Client Overview":
         client_overview_tab()
-    else:
+    elif selected_option == "Welcome" or selected_option is None:
         st.write("Welcome to the Clinic App!")
 
 def add_client_tab():
