@@ -1,8 +1,11 @@
-import streamlit as st
 import os
+import streamlit as st
 
 def display_contact_info():
     st.subheader("Contact Info")
+    
+    # Print the current working directory to verify
+    st.write("Current Working Directory:", os.getcwd())
     
     # Define the correct path to the image
     image_path = os.path.join("denttest", "content", "denta.JPG")
@@ -12,8 +15,3 @@ def display_contact_info():
         st.image(image_path, width=200)  # Adjust the width if necessary
     except Exception as e:
         st.error(f"Error loading image: {str(e)}")
-        
-    # Display other contact information or details here
-    st.write("Clinic Address: Example address, City, Country")
-    st.write("Phone Number: +123456789")
-    st.write("Email: example@clinic.com")
