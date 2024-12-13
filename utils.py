@@ -1,3 +1,4 @@
+# utils.py
 import requests
 import pandas as pd
 import base64
@@ -22,6 +23,12 @@ def load_database():
     else:
         raise Exception(f"Failed to fetch file from GitHub. Status code: {response.status_code}")
 
+def add_client(new_entry):
+    """Add a new client entry to the database."""
+    data = load_database()
+    new_data = data.append(new_entry, ignore_index=True)
+    save_database(new_data)
+
 def save_database(data):
     """Save the DataFrame to GitHub."""
     url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{FILE_PATH}"
@@ -45,4 +52,3 @@ def save_database(data):
         print("Database updated successfully!")
     else:
         raise Exception(f"Failed to update database on GitHub. Status code: {response.status_code}")
-
