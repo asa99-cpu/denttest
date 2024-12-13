@@ -58,14 +58,28 @@ def display_welcome_animation():
 
     # Ensure the session state is initialized
     if "selected_section" not in st.session_state:
-        st.session_state["selected_section"] = None
+        st.session_state["selected_section"] = "Welcome"
 
-    # Add a single click button for entering the clinic app
+    # Display "Enter Clinic" button
     if st.button("کرتە لێرە بکە", key="enter_button"):
         st.session_state["selected_section"] = "Add Client"  # Transition to Add Client section
-        time.sleep(1)  # Ensure button press is processed before transitioning
-        st.experimental_rerun()  # Re-run the app immediately after button click
+        st.experimental_rerun()  # Re-run to reflect the change
 
-    # If the section has been selected, automatically show the add client form (or any next screen)
-    if st.session_state.get("selected_section") == "Add Client":
-        st.experimental_rerun()  # Force app to show Add Client section after button click
+    # Conditionally display sections based on session state
+    if st.session_state["selected_section"] == "Welcome":
+        # The welcome page will be displayed initially
+        display_welcome_animation()
+    elif st.session_state["selected_section"] == "Add Client":
+        # Add Client Section
+        # You can move your "Add Client" logic here or import it from another script
+        st.subheader("Add Client")
+        name = st.text_input("Client Name")
+        age = st.number_input("Age", min_value=0)
+        contact = st.text_input("Contact")
+        medical_history = st.text_area("Medical History")
+
+        if st.button("Add Client", key="add_client_button"):  # Unique key for the button
+            new_entry = {"Name": name, "Age": age, "Contact": contact, "Medical History": medical_history}
+            # add_client(new_entry)  # Add the client logic
+            st.success("Client Added Successfully!")
+            st.balloons()  # Celebrate with balloons!
