@@ -1,8 +1,18 @@
 import streamlit as st
-from sidebar import add_sidebar  # Import sidebar function
+from sidebar import add_sidebar
+from utils import add_client, load_database
 
 def main():
-    add_sidebar()  # Call to display sidebar
+    st.title("Clinic App")
+
+    # Sidebar for navigation
+    add_sidebar()
+
+    # Display the corresponding content based on sidebar selection
+    if st.session_state["selected_section"] == "Add Client":
+        add_client_tab()
+    elif st.session_state["selected_section"] == "Client Overview":
+        client_overview_tab()
 
 def add_client_tab():
     st.subheader("Add Client")
