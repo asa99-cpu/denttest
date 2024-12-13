@@ -5,10 +5,10 @@ def display_contact_info():
     st.subheader("Contact Info")
     
     # Define the correct relative path to the image
-    image_path = os.path.join("denttest", "content", "denta.JPG")
+    image_path = os.path.join("content", "denta.JPG")
     
-    # Display the image
-    try:
+    # Check if the image exists before displaying
+    if os.path.exists(image_path):
         st.image(image_path, width=200)  # Adjust the width if necessary
-    except Exception as e:
-        st.error(f"Error loading image: {str(e)}")
+    else:
+        st.error(f"Image not found at {image_path}")
