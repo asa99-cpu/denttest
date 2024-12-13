@@ -3,7 +3,6 @@ import os
 import requests
 import streamlit as st
 import base64
-import io  # Import StringIO from the io module
 
 # Path to the local CSV file (fallback if GitHub is unavailable)
 LOCAL_DATABASE_FILE = "Database.csv"
@@ -23,7 +22,7 @@ def load_database():
         if response.status_code == 200:
             # Decode the content
             content = base64.b64decode(response.json()["content"]).decode("utf-8")
-            data = pd.read_csv(io.StringIO(content))  # Use io.StringIO
+            data = pd.read_csv(pd.compat.StringIO(content))
         else:
             # If GitHub fetch fails, fallback to local file
             if os.path.exists(LOCAL_DATABASE_FILE):
