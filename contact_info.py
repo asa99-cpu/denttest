@@ -13,7 +13,7 @@ def display_contact_info():
         st.error(f"Image not found at {image_path}")
     
     # Display a brief introduction
-    st.write("Feel free to reach out to us for any inquiries or appointments.")
+    st.write("دوودڵ مەبە لە پەیوەندیکردن بۆ ددانێکی تەندروست.")
     
     # Contact details
     st.write("### Phone Number: +1234567890")
