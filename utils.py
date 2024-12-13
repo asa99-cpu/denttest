@@ -1,77 +1,81 @@
 import pandas as pd
 import os
 import requests
-import base64
 import streamlit as st
+import base64
 
-# Path to the local CSV file
-DATABASE_FILE = "Database.csv"
+# Path to the local CSV file (fallback if GitHub is unavailable)
+LOCAL_DATABASE_FILE = "Database.csv"
 
-# GitHub repository and token details
-REPO_OWNER = "your-github-username"  # Replace with your GitHub username
-REPO_NAME = "your-repository-name"   # Replace with your GitHub repository name
-FILE_PATH = "Database.csv"           # The file path in the repository
-BRANCH_NAME = "main"                 # The branch to update
-GITHUB_TOKEN = st.secrets["github"]["token"]  # Load token from Streamlit secrets
+# Load GitHub token from Streamlit secrets
+GITHUB_TOKEN = st.secrets["github"]["token"]
+GITHUB_REPO = "your-username/your-repository"  # Replace with your GitHub repo
+GITHUB_FILE_PATH = "Database.csv"  # Path to the file in the repository
 
 def load_database():
-    """Load the database from the local CSV file."""
-    if os.path.exists(DATABASE_FILE):
-        data = pd.read_csv(DATABASE_FILE)
-    else:
-        # Create an empty DataFrame with the proper columns if the file doesn't exist
-        data = pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
-    return data
+    """Load the database from GitHub or fallback to local CSV."""
+    try:
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
+        headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+        response = requests.get(url, headers=headers)
+
+        if response.status_code == 200:
+            # Decode the content
+            content = base64.b64decode(response.json()["content"]).decode("utf-8")
+            data = pd.read_csv(pd.compat.StringIO(content))
+        else:
+            # If GitHub fetch fails, fallback to local file
+            if os.path.exists(LOCAL_DATABASE_FILE):
+                data = pd.read_csv(LOCAL_DATABASE_FILE)
+            else:
+                data = pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
+        return data
+
+    except Exception as e:
+        st.error(f"Error loading database: {e}")
+        return pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
 
 def add_client(new_entry):
-    """Add a new client to the database."""
-    data = load_database()  # Load existing data
+    """Add a new client to the database on GitHub."""
+    try:
+        # Load existing data
+        data = load_database()
 
-    # Ensure data is a DataFrame
-    if not isinstance(data, pd.DataFrame):
-        data = pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
+        # Append the new entry
+        data = pd.concat([data, pd.DataFrame([new_entry])], ignore_index=True)
 
-    # Append the new entry to the DataFrame (add it as the last row)
-    data = pd.concat([data, pd.DataFrame([new_entry])], ignore_index=True)
+        # Convert the updated DataFrame to CSV
+        csv_data = data.to_csv(index=False)
 
-    # Save the updated DataFrame back to the CSV locally
-    data.to_csv(DATABASE_FILE, index=False)
+        # Encode the CSV data to base64
+        encoded_csv = base64.b64encode(csv_data.encode("utf-8")).decode("utf-8")
 
-    # Upload the updated CSV to GitHub
-    upload_to_github(data)
+        # Fetch the file's SHA (required to update the file on GitHub)
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
+        headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+        response = requests.get(url, headers=headers)
 
-def upload_to_github(data):
-    """Upload the updated database to GitHub."""
-    # Convert the DataFrame to CSV and encode it as base64
-    csv_data = data.to_csv(index=False)
-    encoded_csv = base64.b64encode(csv_data.encode()).decode()
+        if response.status_code == 200:
+            sha = response.json()["sha"]
+        else:
+            # If the file doesn't exist, SHA is not needed for creation
+            sha = None
 
-    # GitHub API URL for file updates
-    url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{FILE_PATH}"
+        # Prepare the request payload
+        payload = {
+            "message": "Add new client entry",
+            "content": encoded_csv,
+        }
+        if sha:
+            payload["sha"] = sha
 
-    # Get the current file information to retrieve the sha (if the file exists)
-    response = requests.get(url, headers={"Authorization": f"token {GITHUB_TOKEN}"})
-    if response.status_code == 200:
-        file_info = response.json()
-        sha = file_info['sha']
-    else:
-        sha = None  # File doesn't exist, no sha needed
+        # Update the file on GitHub
+        response = requests.put(url, headers=headers, json=payload)
 
-    # Data to update the file on GitHub
-    data = {
-        "message": "Update database.csv",
-        "content": encoded_csv,
-        "branch": BRANCH_NAME
-    }
+        if response.status_code in [200, 201]:
+            st.success("Client added successfully to GitHub database!")
+        else:
+            st.error(f"Failed to update GitHub database: {response.status_code} - {response.text}")
 
-    if sha:
-        data["sha"] = sha  # Include sha for file update if the file exists
-
-    # Send a PUT request to update the file
-    response = requests.put(url, json=data, headers={"Authorization": f"token {GITHUB_TOKEN}"})
-
-    if response.status_code == 201:
-        print("File uploaded successfully!")
-    else:
-        print(f"Failed to upload the file to GitHub. Status code: {response.status_code}")
-        print(response.text)
+    except Exception as e:
+        st.error(f"Error adding client: {e}")
