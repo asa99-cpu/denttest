@@ -1,5 +1,6 @@
 import streamlit as st
 from sidebar import add_sidebar  # Import sidebar function
+from contact_info import contact_info  # Import the contact_info function
 
 def main():
     add_sidebar()  # Call to display sidebar
