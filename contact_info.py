@@ -4,15 +4,6 @@ import streamlit as st
 def display_contact_info():
     st.subheader("Contact Info")
     
-    # Display a brief introduction
-    st.write("Feel free to reach out to us for any inquiries or appointments.")
-    
-    # Contact details
-    st.write("### Phone Number: +1234567890")
-    st.write("### Email: clinic@example.com")
-    st.write("### Address: 123 Clinic St, City, Country")
-    st.write("### Social Media: [Facebook](https://facebook.com/clinic) | [Instagram](https://instagram.com/clinic) | [Twitter](https://twitter.com/clinic)")
-
     # Define the correct relative path to the image
     image_path = os.path.join("content", "denta.JPG")
     
@@ -22,6 +13,15 @@ def display_contact_info():
     else:
         st.error(f"Image not found at {image_path}")
     
+    # Display a brief introduction
+    st.write("Feel free to reach out to us for any inquiries or appointments.")
+    
+    # Contact details
+    st.write("### Phone Number: +1234567890")
+    st.write("### Email: clinic@example.com")
+    st.write("### Address: 123 Clinic St, City, Country")
+    st.write("### Social Media: [Facebook](https://facebook.com/clinic) | [Instagram](https://instagram.com/clinic) | [Twitter](https://twitter.com/clinic)")
+
     # Additional tools for user engagement
     st.write("### Contact Us Form")
     with st.form("contact_form"):
