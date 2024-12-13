@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import requests
 import base64
+import streamlit as st
 
 # Path to the local CSV file
 DATABASE_FILE = "Database.csv"
@@ -11,7 +12,9 @@ REPO_OWNER = "your-github-username"  # Replace with your GitHub username
 REPO_NAME = "your-repository-name"   # Replace with your GitHub repository name
 FILE_PATH = "Database.csv"           # The file path in the repository
 BRANCH_NAME = "main"                 # The branch to update
-GITHUB_TOKEN = "your-github-token"   # Replace with your GitHub personal access token
+
+# Load GitHub token from Streamlit secrets
+GITHUB_TOKEN = st.secrets["github"]["token"]
 
 def load_database():
     """Load the database from the local CSV file."""
@@ -31,7 +34,7 @@ def add_client(new_entry):
         data = pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
 
     # Append the new entry to the DataFrame
-    data = pd.concat([data, pd.DataFrame([new_entry])], ignore_index=True)
+    data = data.append(new_entry, ignore_index=True)  # Add the new entry at the last row
 
     # Save the updated DataFrame back to the CSV locally
     data.to_csv(DATABASE_FILE, index=False)
