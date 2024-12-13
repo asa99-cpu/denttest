@@ -57,24 +57,61 @@ def display_welcome_animation():
 
     # Initialize session state for navigation if not already initialized
     if "selected_section" not in st.session_state:
-        st.session_state["selected_section"] = "Welcome"
+        st.session_state["selected_section"] = "Welcome"  # Start with the Welcome page
 
     # Display "Enter Clinic" button
     if st.button("کرتە لێرە بکە", key="enter_button"):
-        st.session_state["selected_section"] = "Add Client"  # Set the section to Add Client directly
+        st.session_state["selected_section"] = "MainApp"  # Set to main app after button click
 
-    # Conditionally render the Add Client section based on session state
-    if st.session_state["selected_section"] == "Add Client":
-        # Add Client Section
-        # You can move your "Add Client" logic here or import it from another script
-        st.subheader("Add Client")
-        name = st.text_input("Client Name")
-        age = st.number_input("Age", min_value=0)
-        contact = st.text_input("Contact")
-        medical_history = st.text_area("Medical History")
+    # Conditionally render based on selected section
+    if st.session_state["selected_section"] == "MainApp":
+        show_main_app()
 
-        if st.button("Add Client", key="add_client_button"):  # Unique key for the button
-            new_entry = {"Name": name, "Age": age, "Contact": contact, "Medical History": medical_history}
-            # add_client(new_entry)  # Add the client logic
-            st.success("Client Added Successfully!")
-            st.balloons()  # Celebrate with balloons!
+def show_main_app():
+    """Main app page containing all sections like Add Client, Client Overview, etc."""
+    st.title("Dental Clinic - Main App")
+
+    # Add other sections (Add Client, Client Overview, etc.)
+    menu = ["Add Client", "Client Overview", "Appointments", "Medical History"]
+    choice = st.sidebar.selectbox("Select a Section", menu)
+
+    if choice == "Add Client":
+        add_client_section()
+    elif choice == "Client Overview":
+        client_overview_section()
+    elif choice == "Appointments":
+        appointment_section()
+    elif choice == "Medical History":
+        medical_history_section()
+
+def add_client_section():
+    """Section for adding a new client."""
+    st.subheader("Add Client")
+    name = st.text_input("Client Name")
+    age = st.number_input("Age", min_value=0)
+    contact = st.text_input("Contact")
+    medical_history = st.text_area("Medical History")
+
+    if st.button("Add Client"):
+        # Add client logic here
+        st.success("Client Added Successfully!")
+        st.balloons()  # Celebrate with balloons!
+
+def client_overview_section():
+    """Section for viewing all clients."""
+    st.subheader("Client Overview")
+    # Logic to load and display clients goes here
+    st.write("Displaying all clients...")
+
+def appointment_section():
+    """Section for viewing appointments."""
+    st.subheader("Appointments")
+    # Logic for appointments goes here
+    st.write("Displaying all appointments...")
+
+def medical_history_section():
+    """Section for viewing medical history."""
+    st.subheader("Medical History")
+    # Logic for medical history goes here
+    st.write("Displaying medical history...")
+
