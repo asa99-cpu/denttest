@@ -8,11 +8,11 @@ def main():
     # Sidebar with navigation
     add_sidebar()
 
-    # Add Client Tab
-    add_client_tab()
-
-    # Client Overview Tab
-    client_overview_tab()
+    # Check which page to display based on the sidebar selection
+    if st.session_state.get('current_page') == "Add Client":
+        add_client_tab()
+    elif st.session_state.get('current_page') == "Client Overview":
+        client_overview_tab()
 
 def add_client_tab():
     st.subheader("Add Client")
@@ -33,4 +33,7 @@ def client_overview_tab():
     st.write(data)
 
 if __name__ == "__main__":
+    # Initialize the session state for tracking the current page
+    if 'current_page' not in st.session_state:
+        st.session_state.current_page = "Add Client"  # Default page is Add Client
     main()
