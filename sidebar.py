@@ -1,11 +1,16 @@
 import streamlit as st
 
 def render_sidebar():
-    """Render the sidebar and return the selected option."""
+    """Render the sidebar with buttons for navigation and return the selected option."""
     with st.sidebar:
         st.title("Navigation")
-        selected_option = st.radio(
-            "Choose a section:",
-            options=["Welcome", "Add Client", "Client Overview"],
-        )
-    return selected_option
+
+        # Buttons for navigation
+        if st.button("Welcome"):
+            return "Welcome"
+        if st.button("Add Client"):
+            return "Add Client"
+        if st.button("Client Overview"):
+            return "Client Overview"
+
+    return None  # Default return if no button is clicked
