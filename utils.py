@@ -24,7 +24,8 @@ def load_database():
         file_data = base64.b64decode(file_content['content']).decode('utf-8')
         return pd.read_csv(pd.compat.StringIO(file_data))
     else:
-        raise Exception(f"Failed to fetch file from GitHub. Status code: {response.status_code}")
+        raise Exception(f"Failed to fetch file from GitHub. Status code: {response.status_code}. Response Content: {response.text}")
+
 
 def add_client(new_entry):
     """Add a new client entry to the database."""
