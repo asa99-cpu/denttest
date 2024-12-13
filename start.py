@@ -56,12 +56,16 @@ def display_welcome_animation():
     <div class="dentist-emoji">🦷</div>
     """, unsafe_allow_html=True)
 
-    # Check if session state is already set to enter the clinic
+    # Ensure the session state is initialized
     if "selected_section" not in st.session_state:
         st.session_state["selected_section"] = None
 
     # Add a single click button for entering the clinic app
     if st.button("کرتە لێرە بکە", key="enter_button"):
         st.session_state["selected_section"] = "Add Client"  # Transition to Add Client section
-        time.sleep(1)  # Small delay to ensure button press is processed before rerun
+        time.sleep(1)  # Ensure button press is processed before transitioning
         st.experimental_rerun()  # Re-run the app immediately after button click
+
+    # If the section has been selected, automatically show the add client form (or any next screen)
+    if st.session_state.get("selected_section") == "Add Client":
+        st.experimental_rerun()  # Force app to show Add Client section after button click
