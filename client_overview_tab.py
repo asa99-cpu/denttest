@@ -8,9 +8,11 @@ def client_overview_tab():
     
     if not data.empty:
         # Display the table with better styling
-        st.dataframe(data.style.set_properties(**{'background-color': 'lightblue', 'color': 'black'})
-            .set_table_styles(
-                [{'selector': 'thead th', 'props': [('background-color', 'darkblue'), ('color', 'white')]}]
-            ).hide_index())
+        st.dataframe(data.style.set_properties(**{
+            'background-color': 'lightblue', 
+            'color': 'black'
+        }).set_table_styles(
+            [{'selector': 'thead th', 'props': [('background-color', 'darkblue'), ('color', 'white')]}]
+        ).hide_index())
     else:
         st.write("No client data available.")
