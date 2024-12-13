@@ -6,6 +6,10 @@ from contact_info import display_contact_info  # Import the function for contact
 def main():
     st.title("کلینیکی ددانی شادیار")
 
+    # Initialize session_state for 'selected_section' if not already set
+    if "selected_section" not in st.session_state:
+        st.session_state["selected_section"] = "Add Client"  # Set a default section (e.g., "Add Client")
+
     # Sidebar for navigation
     add_sidebar()  # This will call the function from sidebar.py
 
