@@ -15,6 +15,10 @@ def load_database():
     headers = {"Authorization": f"token {GITHUB_TOKEN}"}
     response = requests.get(url, headers=headers)
 
+    # Print out the response for debugging
+    print(f"GitHub Response: {response.status_code}")
+    print(f"Response Content: {response.text}")
+
     if response.status_code == 200:
         file_content = response.json()
         file_data = base64.b64decode(file_content['content']).decode('utf-8')
