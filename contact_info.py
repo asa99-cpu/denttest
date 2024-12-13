@@ -1,23 +1,22 @@
 import os
 import streamlit as st
-from streamlit import components
 
 def display_contact_info():
     # Set the page title
-    st.title("Contact Info")
+    st.title("پەیوەندی کردن")
 
     # Define the correct relative path to the image
     image_path = os.path.join("content", "denta.JPG")
     
     # Check if the image exists before displaying
     if os.path.exists(image_path):
-        st.image(image_path, use_column_width=True)  # Image at the top, adjusting the width
+        st.image(image_path, use_container_width=True)  # Use 'use_container_width' instead of 'use_column_width'
     else:
         st.error(f"Image not found at {image_path}")
 
     # Section introduction with a welcoming message
     st.markdown("## Welcome to our Dental Clinic!")
-    st.write("We are here to provide you with the best dental care. Feel free to reach out for any inquiries or appointments.")
+    st.write("دودڵ مەبە لە پەیوەندیکردن بۆ تەندروستیەکی باشتری ددانەکانت.")
 
     # Add contact details with icons for visual enhancement
     st.markdown("### Contact Details")
