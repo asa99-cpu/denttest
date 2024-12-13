@@ -1,5 +1,5 @@
 import streamlit as st
-from utils import load_database, add_client
+from utils import add_client, load_database
 
 def main():
     st.title("Clinic App")
