@@ -1,14 +1,17 @@
 import streamlit as st
 
 def add_sidebar():
-    """Create a sidebar with navigation buttons."""
-    st.sidebar.title("Navigation")
+    st.sidebar.title("Clinic App")
+
+    # Buttons for each tab
+    add_client_button = st.sidebar.button("Add Client")
+    client_overview_button = st.sidebar.button("Client Overview")
     
-    # List of pages for navigation
-    pages = ["Add Client", "Client Overview"]
-    
-    # Sidebar radio button to select the page
-    page_selection = st.sidebar.radio("Select Page", pages)
-    
-    # Set the current page in session state to track navigation
-    st.session_state.current_page = page_selection
+    # Show corresponding tab based on the button pressed
+    if add_client_button:
+        from app import add_client_tab
+        add_client_tab()  # Call add_client_tab function
+
+    if client_overview_button:
+        from app import client_overview_tab
+        client_overview_tab()  # Call client_overview_tab function
