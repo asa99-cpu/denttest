@@ -16,7 +16,7 @@ def display_contact_info():
     st.write("دوودڵ مەبە لە پەیوەندیکردن بۆ ددانێکی تەندروست.")
     
     # Contact details
-    st.write("### Phone Number: +1234567890")
+    st.write("### Phone Number: ٠٧٥٠٣٢٢٣٩٥٦")
     st.write("### Email: clinic@example.com")
     st.write("### Address: 123 Clinic St, City, Country")
     st.write("### Social Media: [Facebook](https://facebook.com/clinic) | [Instagram](https://instagram.com/clinic) | [Twitter](https://twitter.com/clinic)")
