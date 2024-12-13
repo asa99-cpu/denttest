@@ -31,8 +31,6 @@ def display_welcome_animation():
 
     # Add buttons to navigate after animation
     if st.button("Enter Clinic App"):
-        st.session_state["selected_section"] = "Add Client"
-        st.experimental_rerun()  # Re-run to show the Add Client tab after clicking
+        st.session_state["selected_section"] = "Add Client"  # Update session state to move to the app
+        # No rerun here, just let the flow continue naturally
 
-if __name__ == "__main__":
-    display_welcome_animation()
