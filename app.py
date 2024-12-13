@@ -5,7 +5,7 @@ from sidebar import render_sidebar  # Import the sidebar rendering function
 def main():
     st.title("Clinic App")
 
-    # Add the sidebar
+    # Add the sidebar and get the selected option
     selected_option = render_sidebar()  # Get the selected option from the sidebar
 
     # Check for the selected option and route accordingly
@@ -13,7 +13,7 @@ def main():
         add_client_tab()
     elif selected_option == "Client Overview":
         client_overview_tab()
-    elif selected_option == "Welcome" or selected_option is None:
+    elif selected_option == "Welcome":
         st.write("Welcome to the Clinic App!")
 
 def add_client_tab():
