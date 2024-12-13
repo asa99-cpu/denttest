@@ -5,12 +5,16 @@ def render_sidebar():
     with st.sidebar:
         st.title("Navigation")
 
+        # Initialize session state for the selected page if not already done
+        if "selected_page" not in st.session_state:
+            st.session_state.selected_page = "Welcome"  # Default page
+
         # Buttons for navigation
         if st.button("Welcome"):
-            return "Welcome"
+            st.session_state.selected_page = "Welcome"
         if st.button("Add Client"):
-            return "Add Client"
+            st.session_state.selected_page = "Add Client"
         if st.button("Client Overview"):
-            return "Client Overview"
+            st.session_state.selected_page = "Client Overview"
 
-    return None  # Default return if no button is clicked
+    return st.session_state.selected_page  # Return the selected page from session state
