@@ -51,7 +51,7 @@ def display_welcome_animation():
     st.markdown("""
     <div class="welcome-text">
         <h1>بەخێربێن بۆ کلینیکی شادیار</h1>
-        <p>بەرەو تەندروستیەکی باشترو سیمایەکی جوانتری ددانەکانمان</p>
+        <p>بەرەو تەبدروستیەکی باشترو سیمایەکی جوانتری ددانەکانمان</p>
     </div>
     <div class="dentist-emoji">🦷</div>
     """, unsafe_allow_html=True)
@@ -63,7 +63,5 @@ def display_welcome_animation():
     # Add a single click button for entering the clinic app
     if st.button("کرتە لێرە بکە", key="enter_button"):
         st.session_state["selected_section"] = "Add Client"  # Transition to Add Client section
+        time.sleep(1)  # Small delay to ensure button press is processed before rerun
         st.experimental_rerun()  # Re-run the app immediately after button click
-
-    # Add some delay to let the animation load
-    time.sleep(2)
