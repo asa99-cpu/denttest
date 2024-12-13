@@ -10,7 +10,7 @@ def main():
     # Initialize session_state for 'selected_section' if not already set
     if "selected_section" not in st.session_state:
         st.session_state["selected_section"] = "Add Client"  # Default to "Add Client"
-
+    
     # Sidebar for navigation
     add_sidebar()  # This will call the function from sidebar.py
 
