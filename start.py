@@ -5,7 +5,7 @@ def display_welcome_animation():
     """Display animation or attractive page."""
     st.title("Welcome to the Dental Clinic App")
 
-    # Display some fancy animation or text effect
+    # Add some dentist-related animations and styles
     st.markdown("""
     <style>
         .welcome-text {
@@ -19,18 +19,47 @@ def display_welcome_animation():
             0% {opacity: 0;}
             100% {opacity: 1;}
         }
+
+        .dentist-emoji {
+            font-size: 3em;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .button {
+            font-size: 1.2em;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
     </style>
-    <div class="welcome-text">
-        <h1>Welcome to Our Clinic!</h1>
-        <p>We're glad to have you here. Click below to get started!</p>
-    </div>
     """, unsafe_allow_html=True)
+
+    # Display text in Kurdish (Sorani)
+    st.markdown("""
+    <div class="welcome-text">
+        <h1>بەخێربێن بۆ کلینیکی شادیار</h1>
+        <p>بەرەو تەبدروستیەکی باشترو سیمایەکی جوانتری ددانەکانمان</p>
+    </div>
+    <div class="dentist-emoji">🦷</div>
+    """, unsafe_allow_html=True)
+
+    # Add a single click button for entering the clinic app
+    if st.button("کرتە لێرە بکە", key="enter_button"):
+        st.session_state["selected_section"] = "Add Client"  # Transition to Add Client section directly
+        st.experimental_rerun()  # Re-run the app immediately after button click
 
     # Add some delay to let the animation load
     time.sleep(2)
-
-    # Add buttons to navigate after animation
-    if st.button("Enter Clinic App"):
-        st.session_state["selected_section"] = "Add Client"  # Update session state to move to the app
-        # No rerun here, just let the flow continue naturally
-
