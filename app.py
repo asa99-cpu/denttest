@@ -5,7 +5,7 @@ from utils import add_client, load_database
 from contact_info import display_contact_info  # Import the function for contact info
 
 def main():
-    st.title("کلینیکی ددانی شادیار")
+    st.markdown('<h1 style="text-align: center;">کلینیکی شادیار</h1>', unsafe_allow_html=True)
 
     # Sidebar for navigation
     add_sidebar()  # This will call the function from sidebar.py
