@@ -4,7 +4,7 @@ from sidebar import add_sidebar
 from contact_info import display_contact_info
 
 def main():
-    st.title("Clinic App")
+    st.title("کلینیکی ددانی شادیار")
 
     # Add sidebar for navigation
     add_sidebar()
