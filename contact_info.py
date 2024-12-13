@@ -3,7 +3,7 @@ import streamlit as st
 
 def display_contact_info():
     # Set the page title with right alignment using markdown
-    st.markdown('<h1 style="text-align: right;">پەیوەندی کردن</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="text-align: center;">پەیوەندی کردن</h1>', unsafe_allow_html=True)
     
     # Define the correct relative path to the image
     image_path = os.path.join("content", "denta.JPG")
