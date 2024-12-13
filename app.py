@@ -29,4 +29,3 @@ def client_overview_tab():
 
 if __name__ == "__main__":
     main()
-
