@@ -15,6 +15,13 @@ def load_database():
 def add_client(new_entry):
     """Add a new client to the database."""
     data = load_database()  # Load existing data
-    data = pd.DataFrame(data)  # Ensure data is a DataFrame
+
+    # Ensure data is a DataFrame, in case it's None or something else
+    if not isinstance(data, pd.DataFrame):
+        data = pd.DataFrame(columns=["Name", "Age", "Contact", "Medical History"])
+
+    # Append the new entry to the DataFrame
     data = data.append(new_entry, ignore_index=True)  # Add the new entry
-    data.to_csv(DATABASE_FILE, index=False)  # Save the updated data to the CSV
+
+    # Save the updated DataFrame back to the CSV
+    data.to_csv(DATABASE_FILE, index=False)
