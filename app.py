@@ -2,6 +2,10 @@ import streamlit as st
 from utils import add_client, load_database
 
 def main():
+    # Initialize session state for selected_section if it does not exist
+    if "selected_section" not in st.session_state:
+        st.session_state["selected_section"] = "Add Client"  # Default section
+
     st.title("Clinic App")
 
     # Add Client Tab
@@ -30,4 +34,3 @@ def client_overview_tab():
 
 if __name__ == "__main__":
     main()
-
