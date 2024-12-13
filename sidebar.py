@@ -1,15 +1,15 @@
 import streamlit as st
 
 def add_sidebar():
-    """Create a sidebar for navigation."""
+    """Create a sidebar for navigation with buttons."""
     st.sidebar.title("Navigation")
     
-    # Add "Contact Info" to the sidebar options
-    selected_section = st.sidebar.radio(
-        "Select Section",
-        ("Add Client", "Client Overview", "Contact Info"),  # Add "Contact Info" here
-        key="selected_section_radio"
-    )
+    # Add buttons for navigation
+    if st.sidebar.button("Add Client"):
+        st.session_state["selected_section"] = "Add Client"
     
-    # Save the selection to session_state to access in the main app
-    st.session_state["selected_section"] = selected_section
+    if st.sidebar.button("Client Overview"):
+        st.session_state["selected_section"] = "Client Overview"
+        
+    if st.sidebar.button("Contact Info"):
+        st.session_state["selected_section"] = "Contact Info"
