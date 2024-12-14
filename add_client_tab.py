@@ -6,16 +6,16 @@ def add_client_tab():
 
     # Create a form for adding a client
     with st.form(key="add_client_form"):
-        # Input for client name
+        # Input for client name (still text input as before)
         name = st.text_input("Client Name")
 
         # Dropdown for selecting age (10 to 60 years)
         age = st.selectbox("Age", options=list(range(10, 61)))  # Dropdown from 10 to 60
 
-        # Input for contact information
+        # Input for contact information (still text input)
         contact = st.text_input("Contact", help="Enter the client's phone number or email")
 
-        # Text area for medical history
+        # Text area for medical history (still text area)
         medical_history = st.text_area("Medical History", help="Enter any medical history details")
 
         # Add a submit button with a custom label
