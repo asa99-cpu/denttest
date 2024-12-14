@@ -6,29 +6,32 @@ def add_client_tab():
 
     # Create a form for adding a client
     with st.form(key="add_client_form"):
-        # Inputs for client details
-        name = st.text_input("Client Name")
+        # Dropdown for selecting client name (Example names)
+        name = st.selectbox(
+            "Client Name",
+            options=["John Doe", "Jane Smith", "Michael Johnson", "Add New..."],  # Example names
+            help="Select a client name or choose 'Add New...' to enter a custom name."
+        )
 
-        # Dropdown for age (example: 1-100)
-        age = st.selectbox("Age", options=range(1, 101), help="Select the client's age")
+        # Dropdown for age group (Example ranges)
+        age = st.selectbox(
+            "Age Group",
+            options=["0-10", "11-20", "21-30", "31-40", "41+"],
+            help="Select the client's age group."
+        )
 
-        # Dropdown for contact type
-        contact_type = st.selectbox("Contact Type", options=["Phone", "Email"], help="Select the type of contact")
-        contact = st.text_input(f"Enter {contact_type}", help=f"Enter the client's {contact_type.lower()}")
+        # Dropdown for contact methods
+        contact = st.selectbox(
+            "Preferred Contact Method",
+            options=["Phone", "Email", "WhatsApp", "Other"],
+            help="Select the client's preferred contact method."
+        )
 
-        # Dropdown for medical history categories
-        medical_history_options = [
-            "None",
-            "Allergy",
-            "Diabetes",
-            "Hypertension",
-            "Heart Disease",
-            "Other"
-        ]
-        medical_history = st.selectbox(
+        # Multi-select for medical history (Example options)
+        medical_history = st.multiselect(
             "Medical History",
-            options=medical_history_options,
-            help="Select the client's medical history (if any)"
+            options=["No Issues", "Diabetes", "High Blood Pressure", "Allergies", "Asthma"],
+            help="Select all medical conditions that apply."
         )
 
         # Add a submit button with a custom label
@@ -45,7 +48,7 @@ def add_client_tab():
                 "Name": name,
                 "Age": age,
                 "Contact": contact,
-                "Medical History": medical_history
+                "Medical History": ", ".join(medical_history)  # Combine multiple selections
             }
             add_client(new_entry)  # Call the add_client function from utils
             st.success("Client added successfully!")
