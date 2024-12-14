@@ -10,7 +10,7 @@ def add_client_tab():
         name = st.text_input("Client Name")
 
         # Dropdown for selecting age (10 to 60 years)
-        age = st.selectbox("Age", list(range(10, 61)))  # Dropdown from 10 to 60
+        age = st.selectbox("Age", options=list(range(10, 61)))  # Dropdown from 10 to 60
 
         # Input for contact information
         contact = st.text_input("Contact", help="Enter the client's phone number or email")
